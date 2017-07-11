@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2F3A49491F0F4929007592E4 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3A49481F0F4929007592E4 /* main.swift */; };
+		2F3A49501F0F4940007592E4 /* Kernels.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2F3A494F1F0F4940007592E4 /* Kernels.metal */; };
+		2F3A49551F0F4B23007592E4 /* ImageDiffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3A49541F0F4B23007592E4 /* ImageDiffer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,10 @@
 /* Begin PBXFileReference section */
 		2F3A49451F0F4929007592E4 /* ImageDiff */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ImageDiff; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F3A49481F0F4929007592E4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		2F3A494F1F0F4940007592E4 /* Kernels.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Kernels.metal; sourceTree = "<group>"; };
+		2F3A49521F0F4AC0007592E4 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		2F3A49531F0F4AC0007592E4 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		2F3A49541F0F4B23007592E4 /* ImageDiffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDiffer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +49,7 @@
 			children = (
 				2F3A49471F0F4929007592E4 /* ImageDiff */,
 				2F3A49461F0F4929007592E4 /* Products */,
+				2F3A49511F0F4AC0007592E4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,8 +65,19 @@
 			isa = PBXGroup;
 			children = (
 				2F3A49481F0F4929007592E4 /* main.swift */,
+				2F3A494F1F0F4940007592E4 /* Kernels.metal */,
+				2F3A49541F0F4B23007592E4 /* ImageDiffer.swift */,
 			);
 			path = ImageDiff;
+			sourceTree = "<group>";
+		};
+		2F3A49511F0F4AC0007592E4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2F3A49521F0F4AC0007592E4 /* Metal.framework */,
+				2F3A49531F0F4AC0007592E4 /* MetalKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,6 +137,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F3A49501F0F4940007592E4 /* Kernels.metal in Sources */,
+				2F3A49551F0F4B23007592E4 /* ImageDiffer.swift in Sources */,
 				2F3A49491F0F4929007592E4 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
