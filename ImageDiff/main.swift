@@ -24,11 +24,15 @@ if !fileExists(path: arguments[1]) || !fileExists(path: arguments[2]) {
 
 print("Starting up ImageDiff")
 let start = Date()
-let differ = ImageDiffer()
+var differ : Differ
 if arguments[4] == "m" {
-    differ.applyDiffWithMetal(to: arguments[1], second: arguments[2], output: arguments[3])
+    differ = MetalDiffer()
+} else if arguments[4] == "s" {
+    differ = SoftwareDiffer()
 } else {
-    differ.applyDiffWithCpu(to: arguments[1], second: arguments[2], output: arguments[3])
+    differ = CoreImageDiffer()
 }
+
+differ.applyDiff(to: arguments[1], second: arguments[2], output: arguments[3])
 let runtime = start.timeIntervalSinceNow
 print("Total runtime (seconds): \(abs(runtime))")

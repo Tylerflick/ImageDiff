@@ -9,7 +9,12 @@
 /* Begin PBXBuildFile section */
 		2F3A49491F0F4929007592E4 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3A49481F0F4929007592E4 /* main.swift */; };
 		2F3A49501F0F4940007592E4 /* Kernels.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2F3A494F1F0F4940007592E4 /* Kernels.metal */; };
-		2F3A49551F0F4B23007592E4 /* ImageDiffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3A49541F0F4B23007592E4 /* ImageDiffer.swift */; };
+		2FB1CD581F20F7110016D899 /* MetalDiffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB1CD571F20F7110016D899 /* MetalDiffer.swift */; };
+		2FB1CD5A1F20F75C0016D899 /* Differ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB1CD591F20F75C0016D899 /* Differ.swift */; };
+		2FB1CD5C1F20F9E20016D899 /* SoftwareDiffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB1CD5B1F20F9E20016D899 /* SoftwareDiffer.swift */; };
+		2FB1CD5E1F20FA960016D899 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB1CD5D1F20FA960016D899 /* Utils.swift */; };
+		2FB1CD601F20FB590016D899 /* CoreImageDiffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB1CD5F1F20FB590016D899 /* CoreImageDiffer.swift */; };
+		2FE4D9211F22C90F003037B9 /* CoreImageKernels.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2FE4D9201F22C90F003037B9 /* CoreImageKernels.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,7 +35,13 @@
 		2F3A494F1F0F4940007592E4 /* Kernels.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Kernels.metal; sourceTree = "<group>"; };
 		2F3A49521F0F4AC0007592E4 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		2F3A49531F0F4AC0007592E4 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
-		2F3A49541F0F4B23007592E4 /* ImageDiffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDiffer.swift; sourceTree = "<group>"; };
+		2FB1CD571F20F7110016D899 /* MetalDiffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalDiffer.swift; sourceTree = "<group>"; };
+		2FB1CD591F20F75C0016D899 /* Differ.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Differ.swift; sourceTree = "<group>"; };
+		2FB1CD5B1F20F9E20016D899 /* SoftwareDiffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoftwareDiffer.swift; sourceTree = "<group>"; };
+		2FB1CD5D1F20FA960016D899 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		2FB1CD5F1F20FB590016D899 /* CoreImageDiffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreImageDiffer.swift; sourceTree = "<group>"; };
+		2FB1CD611F2114590016D899 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		2FE4D9201F22C90F003037B9 /* CoreImageKernels.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CoreImageKernels.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,7 +77,12 @@
 			children = (
 				2F3A49481F0F4929007592E4 /* main.swift */,
 				2F3A494F1F0F4940007592E4 /* Kernels.metal */,
-				2F3A49541F0F4B23007592E4 /* ImageDiffer.swift */,
+				2FB1CD571F20F7110016D899 /* MetalDiffer.swift */,
+				2FB1CD591F20F75C0016D899 /* Differ.swift */,
+				2FB1CD5B1F20F9E20016D899 /* SoftwareDiffer.swift */,
+				2FB1CD5D1F20FA960016D899 /* Utils.swift */,
+				2FB1CD5F1F20FB590016D899 /* CoreImageDiffer.swift */,
+				2FE4D9201F22C90F003037B9 /* CoreImageKernels.metal */,
 			);
 			path = ImageDiff;
 			sourceTree = "<group>";
@@ -74,6 +90,7 @@
 		2F3A49511F0F4AC0007592E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2FB1CD611F2114590016D899 /* CoreImage.framework */,
 				2F3A49521F0F4AC0007592E4 /* Metal.framework */,
 				2F3A49531F0F4AC0007592E4 /* MetalKit.framework */,
 			);
@@ -138,8 +155,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F3A49501F0F4940007592E4 /* Kernels.metal in Sources */,
-				2F3A49551F0F4B23007592E4 /* ImageDiffer.swift in Sources */,
 				2F3A49491F0F4929007592E4 /* main.swift in Sources */,
+				2FB1CD601F20FB590016D899 /* CoreImageDiffer.swift in Sources */,
+				2FB1CD5E1F20FA960016D899 /* Utils.swift in Sources */,
+				2FB1CD581F20F7110016D899 /* MetalDiffer.swift in Sources */,
+				2FB1CD5C1F20F9E20016D899 /* SoftwareDiffer.swift in Sources */,
+				2FB1CD5A1F20F75C0016D899 /* Differ.swift in Sources */,
+				2FE4D9211F22C90F003037B9 /* CoreImageKernels.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +273,9 @@
 		2F3A494D1F0F4929007592E4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MTLLINKER_FLAGS = "-cikernel";
+				MTL_COMPILER_FLAGS = "-fcikernel";
+				MTL_HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
@@ -259,6 +284,9 @@
 		2F3A494E1F0F4929007592E4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MTLLINKER_FLAGS = "-cikernel";
+				MTL_COMPILER_FLAGS = "-fcikernel";
+				MTL_HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
@@ -283,6 +311,7 @@
 				2F3A494E1F0F4929007592E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
