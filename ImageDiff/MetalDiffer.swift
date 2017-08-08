@@ -28,6 +28,7 @@ class MetalDiffer : NSObject, Differ {
     var inTextureOne: MTLTexture!
     var inTextureTwo: MTLTexture!
     var outTexture: MTLTexture!
+    var diffCount: [UInt] = [0]
     let bytesPerPixel: Int = 4
     
     /// A Metal compute pipeline state
@@ -63,22 +64,31 @@ class MetalDiffer : NSObject, Differ {
         commandEncoder?.setTexture(inTextureOne, index: 0)
         commandEncoder?.setTexture(inTextureTwo, index: 1)
         commandEncoder?.setTexture(outTexture, index: 2)
+        let diffCntBuffer = device.makeBuffer(bytes: &diffCount, length: (diffCount.count * MemoryLayout<UInt>.size), options: [])
+        commandEncoder?.setBuffer(diffCntBuffer, offset: 0, index: 0)
         
-        let w = pipelineState.threadExecutionWidth
-        let h = pipelineState.maxTotalThreadsPerThreadgroup / w
-        let threadsPerThreadgroup = MTLSizeMake(h, w, 1)
-        let threadgroupsPerGrid = MTLSize(width: (self.outTexture.width + w - 1) / w,
-                                          height: (self.outTexture.height + h - 1) / h,
-                                          depth: 1)
+        let threadsPerThreadgroup = MTLSizeMake(16, 16, 1)
+        let threadgroupsPerGrid = MTLSizeMake(Int(self.outTexture.width) / threadsPerThreadgroup.width, Int(self.outTexture.height) / threadsPerThreadgroup.height, 1)
         
         commandEncoder?.dispatchThreadgroups(threadgroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
         commandEncoder?.endEncoding()
         
         commandBuffer?.commit()
         commandBuffer?.waitUntilCompleted()
-        let image = self.createImage(from: self.outTexture)
-        if !writeCGImage(image, toPath: NSURL.fileURL(withPath: output)) {
-            fatalError("writing output to file \(arguments[2]) failed")
+        
+        var sumOfDiff: UInt = 0
+        let nsData = NSData(bytesNoCopy: (diffCntBuffer?.contents())!,
+                            length: (diffCntBuffer?.length)!,
+                            freeWhenDone: false)
+        nsData.getBytes(&sumOfDiff, length:(diffCntBuffer?.length)!)
+        
+        if sumOfDiff > 0 {
+            let image = self.createImage(from: self.outTexture)
+            if !writeCGImage(image, toPath: NSURL.fileURL(withPath: output)) {
+                fatalError("Fatal Error: Writing output to file \(arguments[2]) failed")
+            }
+        } else {
+            print("No differences found")
         }
     }
     
@@ -88,7 +98,7 @@ class MetalDiffer : NSObject, Differ {
                 pipelineState = try device.makeComputePipelineState(function: kernelFunction)
             }
             catch {
-                fatalError("Impossible to setup Metal")
+                fatalError("Fatal Error: Impossible to setup Metal")
             }
         }
     }
@@ -96,7 +106,7 @@ class MetalDiffer : NSObject, Differ {
     private func createTexture(from image: NSImage) -> MTLTexture {
         
         guard let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
-            fatalError("Can't open image \(image)")
+            fatalError("Fatal Error: Can't open image \(image)")
         }
         
         let textureLoader = MTKTextureLoader(device: self.device)
@@ -105,7 +115,7 @@ class MetalDiffer : NSObject, Differ {
             return textureOut
         }
         catch {
-            fatalError("Can't load texture")
+            fatalError("Fatal Error: Can't load texture")
         }
     }
     
