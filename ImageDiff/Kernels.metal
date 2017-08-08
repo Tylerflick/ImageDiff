@@ -28,7 +28,8 @@ kernel void kernel_metalDiff(texture2d<float, access::read> in_texture_one [[tex
     auto pixel_diff = (first[0] != second[0] || first[1] != second[1] || first[2] != second[2] || first[3] != second[3]);
     if (pixel_diff) {
         atomic_fetch_add_explicit(diff_cnt, 1, memory_order_relaxed);
+        out_texture.write(diff, gid);
+    } else {
+        out_texture.write(same, gid);
     }
-    const float4 colorAtPixel = pixel_diff ? diff : same;
-    out_texture.write(colorAtPixel, gid);
 }
