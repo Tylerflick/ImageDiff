@@ -83,6 +83,7 @@ class MetalDiffer : NSObject, Differ {
         nsData.getBytes(&sumOfDiff, length:(diffCntBuffer?.length)!)
         
         if sumOfDiff > 0 {
+            print("Found \(sumOfDiff) differences between the two images")
             let image = self.createImage(from: self.outTexture)
             if !writeCGImage(image, toPath: NSURL.fileURL(withPath: output)) {
                 fatalError("Fatal Error: Writing output to file \(arguments[2]) failed")
