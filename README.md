@@ -20,7 +20,13 @@ Disadvantages:
 - Complexity of setup. The overhead of transfering the image data from system memory to GPU memory may not be worth the penalty in all situations.
 
 ### CoreImageDiffer
-Uses CoreImage to generate a difference between the two images. *Documentation In Progress*
+Uses CoreImage to generate a difference between the two images.
+
+Advantages:
+- Initial benchmarks show it the fastest of the three approaches. Ease of setup compared with Metal.
+
+Disadvantages:
+- Due to the limitation of the CoreImageKernel signature, only generating an output image in the shader is possible. Regestering if there was a difference still must done on a pass with the CPU.
 
 ## Benchmarks
 *Documentation In Progress*
