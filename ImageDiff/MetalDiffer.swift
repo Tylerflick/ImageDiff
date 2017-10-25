@@ -112,7 +112,7 @@ class MetalDiffer : NSObject, Differ {
         
         let textureLoader = MTKTextureLoader(device: self.device)
         do {
-            let textureOut = try textureLoader.newTexture(with: cgImage)
+            let textureOut = try textureLoader.newTexture(cgImage: cgImage, options: [:])
             return textureOut
         }
         catch {

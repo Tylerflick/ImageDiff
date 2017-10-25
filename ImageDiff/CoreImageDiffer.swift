@@ -21,7 +21,7 @@ class CoreImageDiffer : NSObject, Differ {
             let first = CIImage(contentsOf: URL(fileURLWithPath: first), options:[kCIImageApplyOrientationProperty: true])
             let second = CIImage(contentsOf: URL(fileURLWithPath: second), options:[kCIImageApplyOrientationProperty: true])
             
-            let outputImage = kernel.apply(withExtent: (first?.extent)!, arguments: [first!, second!])
+            let outputImage = kernel.apply(extent: (first?.extent)!, arguments: [first!, second!])
             
             if !writeCGImage(outputImage as! CGImage, toPath: NSURL.fileURL(withPath: output)) {
                 fatalError("writing output to file \(output) failed")
@@ -36,12 +36,12 @@ class CoreImageDiffer : NSObject, Differ {
                                 return colorAtPixel;
                             }
                             """
-            let kernel = CIColorKernel(string: kernelString)
+            let kernel = CIColorKernel(source: kernelString)
             
             let first = CIImage(contentsOf: URL(fileURLWithPath: first))
             let second = CIImage(contentsOf: URL(fileURLWithPath: second))
             
-            let outputImage = kernel?.apply(withExtent: (first?.extent)!, arguments: [first!, second!])
+            let outputImage = kernel?.apply(extent: (first?.extent)!, arguments: [first!, second!])
             let outputUrl = NSURL.fileURL(withPath: output)
             let out = NSBitmapImageRep(ciImage: outputImage!).cgImage
             
