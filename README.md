@@ -11,6 +11,7 @@ As your baseline set grows, your testing time grows liniear to the sum of pixels
 
 ## Using ImageDiff
 ### Inputs
+TODO
 
 ### Outputs
 When using MetalDiffer & SoftwareDiffer the return code of the process represents the number of pixel differences between the two input images. If there are differences, the output image will be saved to the specified location.
@@ -49,3 +50,9 @@ Disadvantages:
 
 ## Benchmarks
 *Documentation In Progress*
+
+## Building
+TODO
+
+## Contributing
+TODO
