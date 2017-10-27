@@ -28,5 +28,16 @@ Advantages:
 Disadvantages:
 - Due to the limitation of the CoreImageKernel signature, only generating an output image in the shader is possible. Regestering if there was a difference still must done on a pass with the CPU.
 
+
+### SoftwareDiffer
+Pure CPU bound linear scan of both images.
+
+Advantages:
+- Simpilest of all three differs. Can track sum of differences since the differ has direct access to each image buffer.
+
+Disadvantages:
+- Slow, log(N) slow.
+
+
 ## Benchmarks
 *Documentation In Progress*
