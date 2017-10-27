@@ -9,5 +9,5 @@
 import Foundation
 
 protocol Differ {
-    func applyDiff(to first: String, second: String, output: String)
+    func applyDiff(to first: String, second: String, output: String) -> Int32
 }

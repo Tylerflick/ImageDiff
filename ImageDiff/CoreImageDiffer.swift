@@ -12,7 +12,7 @@ import AppKit
 
 class CoreImageDiffer : NSObject, Differ {
     
-    func applyDiff(to first: String, second: String, output: String) {
+    func applyDiff(to first: String, second: String, output: String) -> Int32 {
         if #available(OSX 10.13, *) {
             let url = Bundle.main.url(forResource: "default", withExtension: "metallib")
             let data = try! Data(contentsOf: url!)
@@ -24,7 +24,7 @@ class CoreImageDiffer : NSObject, Differ {
             let outputImage = kernel.apply(extent: (first?.extent)!, arguments: [first!, second!])
             
             if !writeCGImage(outputImage as! CGImage, toPath: NSURL.fileURL(withPath: output)) {
-                fatalError("writing output to file \(output) failed")
+                fatalError("Writing output to file \(output) failed")
             }
         } else {
             let kernelString = """
@@ -47,8 +47,9 @@ class CoreImageDiffer : NSObject, Differ {
             
                 
             if !writeCGImage(out!, toPath: outputUrl) {
-                fatalError("writing output to file \(output) failed")
+                fatalError("Writing output to file \(output) failed")
             }
         }
+        return 0
     }
 }

@@ -11,7 +11,7 @@ import AppKit
 
 class SoftwareDiffer : NSObject, Differ {
     
-    public func applyDiff(to first: String, second: String, output: String) {
+    public func applyDiff(to first: String, second: String, output: String) -> Int32 {
         guard let firstImage = NSImage(byReferencingFile: first) else {
             fatalError("Image \(first) does not exist")
         }
@@ -33,7 +33,7 @@ class SoftwareDiffer : NSObject, Differ {
         let bufferTwoRange = CFRangeMake(0,CFDataGetLength(dataTwo))
         
         if bufferOneRange.length != bufferTwoRange.length {
-            fatalError("Fatal Error: Image buffer lengths must match")
+            fatalError("Image buffer lengths must match")
         }
         
         var bufferOne = [UInt8](repeating: 0, count: Int(bufferOneRange.length))
@@ -44,12 +44,14 @@ class SoftwareDiffer : NSObject, Differ {
         CFDataGetBytes(dataTwo, bufferTwoRange, &bufferTwo)
         
         var i = 0
+        var diffCnt = 0
         while i < bufferOneRange.length {
             if bufferOne[i] != bufferTwo[i] || bufferOne[i + 1] != bufferTwo[i + 1] || bufferOne[i + 2] != bufferTwo[i + 2] || bufferOne[i + 3] != bufferTwo[i + 3] {
                 bufferOut[i] = 0;
                 bufferOut[i + 1] = 0;
                 bufferOut[i + 2] = 0;
                 bufferOut[i + 3] = 255;
+                diffCnt += 1
             } else {
                 bufferOut[i] = 255;
                 bufferOut[i + 1] = 255;
@@ -70,7 +72,8 @@ class SoftwareDiffer : NSObject, Differ {
         
         let image = context!.makeImage()!
         if !writeCGImage(image, toPath: NSURL.fileURL(withPath: output)) {
-            fatalError("Fatal Error: Writing output to file \(arguments[2]) failed")
+            fatalError("Writing output to file \(arguments[2]) failed")
         }
+        return Int32(diffCnt)
     }
 }

@@ -16,10 +16,10 @@ func fileExists(path: String) -> Bool {
 let arguments = CommandLine.arguments
 
 if arguments.count < 5 {
-    fatalError("Fatal Error (arguments mismatch): two input image paths, one output image path, c to specify CPU based or m to specify Metal based")
+    fatalError("Arguments mismatch. Two input image paths, one output image path, c to specify CPU based or m to specify Metal based")
 }
 if !fileExists(path: arguments[1]) || !fileExists(path: arguments[2]) {
-    fatalError("Fatal Error: input file(s) do not exist")
+    fatalError("Input file(s) do not exist")
 }
 
 print("Starting up ImageDiff")
@@ -33,6 +33,7 @@ if arguments[4] == "m" {
     differ = CoreImageDiffer()
 }
 
-differ.applyDiff(to: arguments[1], second: arguments[2], output: arguments[3])
+var diffs = differ.applyDiff(to: arguments[1], second: arguments[2], output: arguments[3])
 let runtime = start.timeIntervalSinceNow
 print("Total runtime (seconds): \(abs(runtime))")
+exit(diffs)

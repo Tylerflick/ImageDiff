@@ -34,25 +34,25 @@ class MetalDiffer : NSObject, Differ {
     /// A Metal compute pipeline state
     var pipelineState: MTLComputePipelineState!
     
-    public func applyDiff(to first: String, second: String, output: String) {
+    public func applyDiff(to first: String, second: String, output: String) -> Int32 {
         setUpMetal()
         
         guard let firstImage = NSImage(byReferencingFile: first) else {
-            fatalError("Fatal Error: Image \(first) does not exist")
+            fatalError("Image \(first) does not exist")
         }
         guard let secondImage = NSImage(byReferencingFile: second) else {
-            fatalError("Fatal Error: Image \(second) does not exist")
+            fatalError("Image \(second) does not exist")
         }
         
         if (firstImage.size != secondImage.size) {
-            fatalError("Fatal Error: Input image sizes must match")
+            fatalError("Input image sizes must match")
         }
         
         self.inTextureOne = createTexture(from: firstImage)
         self.inTextureTwo = createTexture(from: secondImage)
         
         if (self.inTextureOne.pixelFormat != self.inTextureTwo.pixelFormat) {
-            fatalError("Fatal Error: Input image pixel formats must match")
+            fatalError("Input image pixel formats must match")
         }
         
         self.outTexture = createTexture(from: self.inTextureOne.width, height: self.inTextureOne.height, pixelFormat: MTLPixelFormat.rgba8Unorm)
@@ -76,7 +76,7 @@ class MetalDiffer : NSObject, Differ {
         commandBuffer?.commit()
         commandBuffer?.waitUntilCompleted()
         
-        var sumOfDiff: UInt = 0
+        var sumOfDiff: Int32 = 0
         let nsData = NSData(bytesNoCopy: (diffCntBuffer?.contents())!,
                             length: (diffCntBuffer?.length)!,
                             freeWhenDone: false)
@@ -91,6 +91,8 @@ class MetalDiffer : NSObject, Differ {
         } else {
             print("No differences found")
         }
+
+        return sumOfDiff
     }
     
     private func setUpMetal() {
@@ -99,7 +101,7 @@ class MetalDiffer : NSObject, Differ {
                 pipelineState = try device.makeComputePipelineState(function: kernelFunction)
             }
             catch {
-                fatalError("Fatal Error: Impossible to setup Metal")
+                fatalError("Impossible to setup Metal")
             }
         }
     }
@@ -107,7 +109,7 @@ class MetalDiffer : NSObject, Differ {
     private func createTexture(from image: NSImage) -> MTLTexture {
         
         guard let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
-            fatalError("Fatal Error: Can't open image \(image)")
+            fatalError("Can't open image \(image)")
         }
         
         let textureLoader = MTKTextureLoader(device: self.device)
@@ -116,7 +118,7 @@ class MetalDiffer : NSObject, Differ {
             return textureOut
         }
         catch {
-            fatalError("Fatal Error: Can't load texture")
+            fatalError("Can't load texture")
         }
     }
     
