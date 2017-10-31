@@ -124,6 +124,7 @@ class MetalDiffer : NSObject, Differ {
     
     private func createTexture(from width: Int, height: Int, pixelFormat: MTLPixelFormat) -> MTLTexture {
         let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: pixelFormat, width: width, height: height, mipmapped: false)
+        textureDescriptor.usage = MTLTextureUsage.shaderWrite
         return self.device.makeTexture(descriptor: textureDescriptor)!
     }
     
